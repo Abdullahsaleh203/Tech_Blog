@@ -1,6 +1,7 @@
 from flask import Flask ,render_template , url_for ,flash , redirect
 from forms import RegistrationForm , LoginForm 
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
+from datetime import datetime
 # import os
 # from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import create_engine, ForeignKey, Column, String ,Integer, CHAR
@@ -17,11 +18,21 @@ class User(db.Model):
     image_file = db.Column(db.String(120), nullable=False,defult='default.jpg')
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post', backref='author', lazy=True)
+
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}','{self.image_file}')"
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    # user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
 
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}','{self.image_file}')"
 
 
 # class Base(DeclarativeBase):
