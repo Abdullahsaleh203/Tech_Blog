@@ -4,13 +4,25 @@ from forms import RegistrationForm , LoginForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8a519c340ce6193ef0d7900f7dfc6afdd496900e'
 
+posts = [
+    {
+        "author":"Abdallah",
+        "title": "blog post 1",
+        "content":"first post content",
+        "date_content":"April 5 ,2024"
+    },
+    {
+        "author":"Abdallah",
+        "title": "blog post 2",
+        "content":"second post content",
+        "date_content":"April 5 ,2024"
+    }
+]
 @app.route('/')
+@app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('home.html',posts = posts)
 
-@app.route('/home') 
-def home():
-    return render_template('home.html') 
 
 @app.route('/about')
 def about():
