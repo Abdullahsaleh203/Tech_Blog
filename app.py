@@ -71,13 +71,10 @@ posts = [
 def home():
     return render_template('home.html',posts = posts,title ="home")
 
-
 @app.route('/about')
 def about():
     return render_template('about.html',title ="About") 
 
-
-    
 @app.route("/register",methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -96,7 +93,8 @@ def login():
         else:
             flash('Invalid credentials', 'danger')
     return render_template('login.html', form=form , title ="Login") 
-
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)
 # @app.route("/dashboard",methods=['GET', 'POST'])
 # def dashboard():
 #     form = LoginForm()
@@ -108,7 +106,6 @@ def login():
 #         return render_template("dashboard.html",title ="Dashboard")
 #     else:
 #         return redirect(url_for('login'))
-
 # @app.route("/add",methods=['GET', 'POST'])
 # def add():
 #     if 'logged_in' in session:
@@ -120,7 +117,6 @@ def login():
 #         return render_template('add.html')
 #     else:
 #         return redirect(url_for('login'))
-
 # @app.route("/logout")
 # def logout():
 #     session.pop('logged_in', None)
@@ -129,15 +125,6 @@ def login():
 
     #     return redirect(url_for('home'))
     # return render_template('login.html', form=form, title ="Login")
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True, port=8000)
-
-
-
-
 
 
 # @app.route("/register", methods=['GET', 'POST'])
