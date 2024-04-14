@@ -1,8 +1,11 @@
 from datetime import datetime
-from tech_blog import db
+from tech_blog import db ,login_manager
 from sqlalchemy import ForeignKey, Column, String ,Integer, CHAR
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(int(user_id))
+class User(db.Model,UserMixin):
     """
     Represents a user in the application.
 
