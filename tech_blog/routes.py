@@ -2,8 +2,7 @@ from flask import Flask ,render_template , url_for ,flash , redirect
 from tech_blog import app ,db , bcrypt
 from tech_blog.forms import RegistrationForm , LoginForm
 from tech_blog.models import User, Post 
-from flask_login import login_user
-
+from flask_login import login_user, current_user, logout_user, login_required
 posts = [
     {
         "author":"Abdallah",
@@ -43,7 +42,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(User.email == form.email.data).first()
+        user = User.query.filter_by(email = form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             flash('You have been logged in!', 'success')
@@ -52,6 +51,6 @@ def login():
         # if form.email.data == 'admin@blog.com' and form.password.data == 'password':
         #     flash('You have been logged in!', 'success')
         #     return redirect(url_for('home'))
-        # else:
+        else:
             flash('Invalid credentials', 'danger')
     return render_template('login.html', form=form , title ="Login") 
