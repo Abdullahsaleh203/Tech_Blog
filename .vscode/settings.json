@@ -1,4 +1,7 @@
 {
   "git.ignoreLimitWarning": true,
-  "cSpell.words": ["Abdallah"]
+  "cSpell.words": ["Abdallah"],
+  "files.associations": {
+    "string": "c"
+  }
 }
