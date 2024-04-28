@@ -7,6 +7,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(int(user_id))
+
+
 posts = [
     {
         "author":"Abdallah",
