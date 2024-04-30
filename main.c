@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
-#include <cs50.h>
+#include <string.h>
+
 // linear search 
 // linear search function definition
 // # Hashing 
