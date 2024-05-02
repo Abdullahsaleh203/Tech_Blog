@@ -5,6 +5,7 @@
 // linear search function definition
 // # Hashing 
 
+
 // int* linear_search(int arr[],
 //                    int n,
 //                    int size)
