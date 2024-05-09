@@ -1,4 +1,4 @@
-from flask import Flask ,render_template , url_for ,flash , redirect
+from flask import Flask ,render_template , url_for ,flash , redirect , request
 from tech_blog import app ,db , bcrypt, login_manager
 from tech_blog.forms import RegistrationForm , LoginForm
 from tech_blog.models import User, Post 
@@ -6,18 +6,18 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(int(user_id))
+    return User.query.get(int(user_id))
 
 posts = [
     {
         "author":"Abdallah",
-        "title": "blog post 1",
+        "title": "post 1",
         "content":"first post content",
         "date_content":"April 5 ,2024"
     },
     {
         "author":"Abdallah",
-        "title": "blog post 2",
+        "title": "post 2",
         "content":"second post content",
         "date_content":"April 5 ,2024"
     }
@@ -54,9 +54,19 @@ def login():
         user = User.query.filter_by(email = form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
 
         else:
             flash('Invalid credentials', 'danger')
     return render_template('login.html', form=form , title ="Login") 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html', title='Account')
